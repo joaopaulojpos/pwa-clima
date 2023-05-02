@@ -107,7 +107,7 @@ async function climaAtual(){
     dataSet.temperaturaMaxima = Math.round(response.data.main.temp_max)
     dataSet.temperaturaMinima = Math.round(response.data.main.temp_min)
     dataSet.descricao = response.data.weather[0].description
-    dataSet.icone = '/src/assets/'+response.data.weather[0].icon+'.png'
+    dataSet.icone = 'https://raw.githubusercontent.com/joaopaulojpos/pwa-clima/main/src/assets/'+response.data.weather[0].icon+'.png'
     dataSet.umidade = response.data.main.humidity
   } catch (error) {
     msgErro.value = error.message
