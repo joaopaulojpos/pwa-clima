@@ -8,7 +8,15 @@
     </v-alert>
   </v-container>
 
-  <v-container v-if="!msgErro" class="grey-lighten-4">
+  <v-container v-if="loading" class="text-center mt-5">
+    <v-progress-circular
+      :size="70"
+      color="red"
+      indeterminate
+    ></v-progress-circular>
+  </v-container>
+
+  <v-container v-if="!loading" class="grey-lighten-4">
     <div class="text-center">
     <p class="text-h6 font-weight-bold text-center">{{dataSet.cidade}}, {{ dataSet.pais }}</p>
     <img :src="dataSet.icone" alt="icone clima" height="210" width="210">
@@ -17,7 +25,7 @@
     </div>
   </v-container>
 
-  <v-container v-if="!msgErro">
+  <v-container v-if="!loading">
       <v-row class="text-center">
 
         <v-col cols="4">
@@ -65,6 +73,7 @@ import api from '@/services/api'
 const latitude = ref(null)
 const longitude = ref(null)
 const msgErro = ref(null)
+const loading = ref(true)
 const dataSet = reactive({
   cidade: null,
   pais: null,
@@ -109,6 +118,7 @@ async function climaAtual(){
     dataSet.descricao = response.data.weather[0].description
     dataSet.icone = 'https://raw.githubusercontent.com/joaopaulojpos/pwa-clima/main/src/assets/'+response.data.weather[0].icon+'.png'
     dataSet.umidade = response.data.main.humidity
+    loading.value = false
   } catch (error) {
     msgErro.value = error.message
   }
